@@ -1,0 +1,43 @@
+<div class="page-header">
+  <h1>Registrar movil</h1>
+</div>
+
+<div class="row">
+  <div class="col-12 col-sm-3">
+    <form action="/monitoreo/busqueda" method="get" class="form-inline">
+      <input type="text" name="codigo" id="codigo" value="<?= $codigo ?? '' ?>" class="form-control">
+      <button type="submit" class="btn btn-sm btn-primary">Buscar</button>
+    </form>
+
+    <br>
+
+    <div class="well well-sm">
+      <h4 class="blue smaller lighter">Datos de encomienda</h4>
+      <p><strong>Estado: </strong><?= $encomienda['estado'] ?? '' ?></p>
+      <p><strong>Origen: </strong><?= $encomienda['origen'] ?? '' ?></p>
+      <p><strong>Destino: </strong><?= $encomienda['destino'] ?? '' ?></p>
+      <p><strong>Salida: </strong><?= $encomienda['fechahora_salida'] ?? '' ?></p>
+      <p><strong>Llegada: </strong><?= $encomienda['fechahora_llegada'] ?? '' ?></p>
+      <p><strong>Encomienda: </strong><?= $encomienda['encomienda'] ?? '' ?></p>
+      <p><strong>Direccion: </strong><?= $encomienda['direccion_entrega'] ?? '' ?></p>
+      <p><strong>Emisor: </strong><?= $encomienda['emisor'] ?? '' ?></p>
+      <p><strong>Receptor: </strong><?= $encomienda['receptor'] ?? '' ?></p>
+      <h4 class="blue smaller lighter">Datos del movil</h4>
+      <p><strong>Conductor: </strong><?= $encomienda['nombres'] ?? '' ?> <?= $encomienda['apellidos'] ?? '' ?> </p>
+      <p><strong>Celular: </strong><?= $encomienda['celular'] ?? '' ?></p>
+      <p><strong>Movil: </strong><?= $encomienda['interno'] ?? '' ?></p>
+
+    </div>
+  </div>
+  <div class="col-12 col-sm-9">
+    <div id="map"></div>
+  </div>
+</div>
+
+<script>
+  const map = L.map('map').setView([<?= $encomienda['latitud'] ?? '' ?>, <?= $encomienda['longitud'] ?? '' ?>], 17);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+  L.marker([<?= $encomienda['latitud'] ?? '' ?>, <?= $encomienda['longitud'] ?? '' ?>]).addTo(map);
+</script>

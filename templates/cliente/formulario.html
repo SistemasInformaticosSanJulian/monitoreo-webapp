@@ -1,0 +1,43 @@
+<div class="page-header">
+  <h1>Registrar cliente</h1>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <form action="/cliente" method="post">
+      <input type="number" name="id" value="<?= $cliente['id'] ?? 0 ?>" hidden>
+      <input type="number" name="usuario_id" value="<?= $usuario['id'] ?? 0 ?>" hidden>
+      <input type="text" name="correo_electronico" value="<?= $usuario['nombre'] ?? '' ?>" hidden>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <label for="nombres" class="control-label">Nombres</label>
+          <input name="nombres" value="<?= $cliente['nombres'] ?? '' ?>"
+                 required id="nombres" type="text" class="form-control">
+        </div>
+
+        <div class="col-sm-6">
+          <label for="apellidos" class="control-label">Apellidos</label>
+          <input name="apellidos" value="<?= $cliente['apellidos'] ?? '' ?>" id="apellidos" required
+                 class="form-control">
+        </div>
+      </div>
+
+      <div class="row" style="margin-top: 8px;">
+        <div class="col-md-4">
+          <label for="celular" class="control-label">Celular</label>
+          <input name="celular" value="<?= $cliente['celular'] ?? '' ?>" id="celular"
+                 type="tel" class="form-control">
+        </div>
+        <div class="col-md-8">
+          <label for="direccion" class="control-label">Direccion</label>
+          <input name="direccion" value="<?= $cliente['direccion'] ?? '' ?>"
+                 id="direccion" type="text" class="form-control">
+        </div>
+      </div>
+      <div style="margin-top: 16px; margin-bottom: 16px;">
+        <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>

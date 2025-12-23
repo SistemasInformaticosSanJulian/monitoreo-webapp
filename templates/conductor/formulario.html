@@ -1,0 +1,102 @@
+<div class="page-header">
+  <h1>Registrar Conductor</h1>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <form action="/conductor" method="post">
+      <input type="hidden" name="id" value="<?= $conductor['id'] ?? 0 ?>">
+      <div class="row" style="margin-bottom: 0px; padding-bottom: 0px;">
+        <div class="col-sm-6">
+          <div>
+            <label for="nombres" class="control-label">Nombres</label>
+            <input type="text" name="nombres" id="nombres"
+                   value="<?= $conductor['nombres'] ?? '' ?>" class="form-control">
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div>
+            <label for="nombres" class="control-label">Apellidos</label>
+            <input type="text" name="apellidos" id="apellidos"
+                   value="<?= $conductor['apellidos'] ?? '' ?>" class="form-control">
+          </div>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top: 8px;">
+        <div class="col-sm-3">
+          <div>
+            <label for="nombres" class="control-label">Carnet</label>
+            <input type="text" name="carnet" id="carnet" value="<?= $conductor['carnet'] ?? '' ?>" class="form-control">
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div>
+            <label for="nombres" class="control-label">Fecha Nacimiento</label>
+            <input type="date" name="fecha_nacimiento" id="fecha_nacimiento"
+                   value="<?= $conductor['fecha_nacimiento'] ?? '' ?>" class="form-control">
+          </div>
+        </div>
+        <div class="col-sm-3" >
+          <div>
+            <label for="nombres" class="control-label">Celular</label>
+            <input type="tel" name="celular" id="celular" value="<?= $conductor['celular'] ?? '' ?>" class="form-control">
+          </div>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top: 8px;">
+        <div class="col-sm-4">
+          <div>
+            <label for="nombres" class="control-label">Correo</label>
+            <input type="email" name="correo" id="correo" value="<?= $conductor['correo'] ?? '' ?>" class="form-control">
+          </div>
+        </div>
+        <div class="col-sm-5">
+          <div>
+            <label for="nombres" class="control-label">Direccion</label>
+            <input type="text" name="direccion" id="direccion" value="<?= $conductor['direccion'] ?? '' ?>"
+                   class="form-control">
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 16px; margin-bottom: 16px;">
+        <a href="/conductor" class="btn btn-sm btn-success">Nuevo</a>
+        <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<div class="row mt-5">
+  <div class="col-sm-12">
+    <table id="simple-table" class="table  table-bordered table-hover">
+      <thead>
+      <tr>
+        <th>Nombres</th>
+        <th>Apellidos</th>
+        <th>Celular</th>
+        <th>Carnet</th>
+        <th>FN</th>
+        <th width="50"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <?php foreach($conductores as $item): ?>
+      <tr>
+        <td><?= $item['nombres'] ?> </td>
+        <td> <?= $item['apellidos'] ?> </td>
+        <td> <?= $item['celular'] ?> </td>
+        <td> <?= $item['carnet'] ?> </td>
+        <td> <?= $item['fecha_nacimiento'] ?> </td>
+        <td>
+          <a href="/conductor/<?= $item['id'] ?>" class="btn btn-xs btn-success">Ver</a>
+        </td>
+      </tr>
+      <?php endforeach; ?>
+      </tbody>
+    </table>
+  </div>
+</div>

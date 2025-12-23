@@ -1,0 +1,166 @@
+<div class="page-header">
+  <h1>Registrar Viaje</h1>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <form action="/viaje" method="post">
+      <input type="hidden" name="id" value="<?= $viaje['id'] ?? 0 ?>">
+
+      <div class="row">
+        <div class="col-sm-9">
+          <div class="row">
+            <div class="col-sm-4">
+              <div>
+                <label for="codigo" class="control-label">Codigo</label>
+                <input type="text" name="codigo" id="codigo"
+                       value="<?= $viaje['codigo'] ?? '' ?>" class="form-control" disabled>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div>
+                <label for="origen" class="control-label">Origen</label>
+                <select name="origen" id="origen" class="form-control">
+                  <option value="San Julian" <?= ($viaje['origen'] ?? '') == 'San Julian' ? 'selected': '' ?>
+                  >San Julian</option>
+                  <option value="Santa Cruz" <?= ($viaje['origen'] ?? '') == 'Santa Cruz' ? 'selected': '' ?>>Santa Cruz</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div>
+                <label for="destino" class="control-label">Destino</label>
+                <select name="destino" id="destino" class="form-control">
+                  <option value="San Julian" <?= ($viaje['destino'] ?? '') == 'San Julian' ? 'selected': '' ?>
+                  >San Julian</option>
+                  <option value="Santa Cruz" <?= ($viaje['destino'] ?? '') == 'Santa Cruz' ? 'selected': '' ?>>Santa Cruz</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 8px;">
+            <div class="col-sm-4">
+              <div>
+                <label for="fechahora_salida" class="control-label">Salida</label>
+                <input type="datetime-local" name="fechahora_salida" id="fechahora_salida"
+                       value="<?= $viaje['fechahora_salida'] ?? '' ?>" class="form-control">
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div>
+                <label for="fechahora_llegada" class="control-label">Llegada</label>
+                <input type="datetime-local" name="fechahora_llegada" id="fechahora_llegada"
+                       value="<?= $viaje['fechahora_llegada'] ?? '' ?>" class="form-control">
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div>
+                <label for="estado" class="control-label">Estado</label>
+                <select name="estado" id="estado" class="form-control">
+                  <option value="En ruta" <?= ($viaje['estado'] ?? '') == 'En ruta' ? 'selected': '' ?> >En ruta</option>
+                  <option value="Recibido" <?= ($viaje['estado'] ?? '') == 'Recibido' ? 'selected': '' ?>>Recibido</option>
+                  <option value="Entregado" <?= ($viaje['estado'] ?? '') == 'Entregado' ? 'selected': '' ?>>Entregado</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 8px;">
+            <div class="col-sm-4">
+              <div>
+                <label for="direccion_entrega" class="control-label">Direccion de entrega</label>
+                <input type="text" name="direccion_entrega" id="direccion_entrega"
+                       value="<?= $viaje['direccion_entrega'] ?? '' ?>" class="form-control">
+
+              </div>
+            </div>
+            <div class="col-sm-8">
+              <div>
+                <label for="encomienda" class="control-label">Encomienda</label>
+                <input type="text" name="encomienda" id="encomienda"
+                       value="<?= $viaje['encomienda'] ?? '' ?>" class="form-control">
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 8px;">
+            <div class="col-sm-6">
+              <div>
+                <label for="emisor" class="control-label">Emisor</label>
+                <input type="text" name="emisor" id="emisor"
+                       value="<?= $viaje['emisor'] ?? '' ?>" class="form-control">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div>
+                <label for="receptor" class="control-label">Receptor</label>
+                <input type="text" name="receptor" id="receptor"
+                       value="<?= $viaje['receptor'] ?? '' ?>" class="form-control">
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 8px;">
+            <div class="col-sm-12">
+              <div>
+                <label for="movil_id" class="control-label">Movil</label>
+                <select name="movil_id" id="movil_id" class="form-control">
+                  <?php foreach($moviles as $item): ?>
+                  <option value="<?= $item['id'] ?>"
+                  <?= ($viaje['movil_id'] ?? 0) == $item['id'] ? 'selected' : '' ?>>
+                  <?= $item['interno'] . ' - ' . $item['nombres'] . ' ' . $item['apellidos'] . ' (' . $item['celular'] . ')' ?>
+                  </option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <qr-code data="<?= $viaje['codigo'] ?? '' ?>" modulesize="10"></qr-code>
+        </div>
+      </div>
+
+      <div style="margin-top: 16px; margin-bottom: 16px;">
+        <a href="/viaje" class="btn btn-sm btn-success">Nuevo</a>
+        <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="row mt-5">
+  <div class="col-sm-12">
+    <table id="simple-table" class="table  table-bordered table-hover">
+      <thead>
+      <tr>
+        <th>Codigo</th>
+        <th>Movil</th>
+        <th>Origen - Destino</th>
+        <th>Salida</th>
+        <th>LLegada</th>
+        <th>Estado</th>
+        <th width="50"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <?php foreach($viajes as $item): ?>
+      <tr>
+        <td><?= $item['codigo'] ?> </td>
+        <td> <?= $item['interno'] ?> </td>
+        <td> <?= $item['origen'] ?> a <?= $item['destino'] ?> </td>
+        <td> <?= $item['fechahora_salida'] ?> </td>
+        <td> <?= $item['fechahora_llegada'] ?> </td>
+        <td> <?= $item['estado'] ?> </td>
+        <td>
+          <a href="/viaje/<?= $item['id'] ?>" class="btn btn-xs btn-success">Ver</a>
+        </td>
+      </tr>
+      <?php endforeach; ?>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script type="module">
+  import QRCode from './assets/pwa/qr-code';
+
+  customElements.define('myapp-qrcode', QRCode)
+</script>
