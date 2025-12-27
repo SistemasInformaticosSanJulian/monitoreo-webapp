@@ -11,11 +11,15 @@ class MOperador
     private int $id;
     private string $nombre;
     private string $contrasenia;
+    private string $rol;
+    private int $oficina_id;
+
     public function __construct()
     {
         $this->id = 0;
         $this->nombre = '';
         $this->contrasenia = '';
+        $this->rol = '';
         $this->oficina_id = 0;
     }
 
@@ -26,65 +30,41 @@ class MOperador
         if (array_key_exists('password', $data) && !empty($data['password'])) {
             $this->contrasenia = trim($data['password']);
         }
+        $this->rol = array_key_exists('rol', $data) ? trim($data['rol']) : 'operador';
         $this->oficina_id = array_key_exists('oficina_id', $data) ? (int)$data['oficina_id'] : 0;
     }
 
     public function find($id): array
     {
-        $query = "SELECT u.*, o.oficina_id, off.nombre as oficina_nombre 
-                  FROM usuario u 
-                  LEFT JOIN operador o ON u.id = o.usuario_id 
-                  LEFT JOIN oficina off ON o.oficina_id = off.id
-                  WHERE u.id=? AND u.rol='operador' AND u.soft_delete=0;";
+        $query = "SELECT op.*, of.nombre as oficina 
+                  FROM operador op inner join oficina of on 
+                  op.oficina_id = of.id
+                  WHERE op.id=$1 and op.rol='operador' AND op.soft_delete=0";
         return Sqlite::fetchOne($query, [$id]);
     }
 
     public function findAll(): array
     {
-        $query = "SELECT u.*, off.nombre as oficina_nombre 
-                  FROM usuario u 
-                  LEFT JOIN operador o ON u.id = o.usuario_id 
-                  LEFT JOIN oficina off ON o.oficina_id = off.id
-                  WHERE u.rol='operador' AND u.soft_delete=0 ORDER BY u.nombre;";
+        $query = "SELECT op.id, op.nombre, op.rol, of.nombre as oficina 
+                  FROM operador op inner join oficina of on 
+                  op.oficina_id = of.id
+                  WHERE op.rol='operador' AND op.soft_delete=0 ORDER BY op.nombre;";
         return Sqlite::fetchAll($query);
     }
 
     public function save(): array
     {
         if ($this->id !== 0) {
-            // Update Usuario
-            if (!empty($this->contrasenia)) {
-                $query = 'update usuario set nombre=?, contrasenia=?, updated_at=? where id=? and rol=\'operador\';';
-                $values = [$this->nombre, $this->passwordHash($this->contrasenia), date('Y-m-d H:i:s'), $this->id];
-            } else {
-                $query = 'update usuario set nombre=?, updated_at=? where id=? and rol=\'operador\';';
-                $values = [$this->nombre, date('Y-m-d H:i:s'), $this->id];
-            }
-            Sqlite::execUpdateOrDelete($query, $values);
-
-            // Update or Insert Operador profile
-            $profile = Sqlite::fetchOne("select id from operador where usuario_id=?;", [$this->id]);
-            if ($profile) {
-                Sqlite::execUpdateOrDelete("update operador set oficina_id=? where usuario_id=?;", [$this->oficina_id, $this->id]);
-            } else {
-                Sqlite::execInsert("insert into operador (usuario_id, oficina_id) values (?,?);", [$this->id, $this->oficina_id]);
-            }
-
-            return $this->find($this->id);
+            $query = 'update operador set nombre=?, contrasenia=?, rol=? ,oficina_id=?, updated_at=? where id=?;';
+            $values = [$this->nombre, $this->passwordHash($this->contrasenia), $this->rol, $this->oficina_id, date('Y-m-d H:i:s'), $this->id];
+            $id = Sqlite::execUpdateOrDelete($query, $values);
+            return $id !== 0 ? $this->find($id) : ['error' => 'Error'];
         }
 
-        // Insert Usuario
-        $query = 'insert into usuario (nombre, contrasenia, rol, updated_at) values (?,?,?,?);';
-        $values = [$this->nombre, $this->passwordHash($this->contrasenia), 'operador', date('Y-m-d H:i:s')];
-        $usuarioId = Sqlite::execInsert($query, $values);
-
-        if ($usuarioId > 0) {
-            // Insert Operador profile
-            Sqlite::execInsert("insert into operador (usuario_id, oficina_id) values (?,?);", [$usuarioId, $this->oficina_id]);
-            return $this->find($usuarioId);
-        }
-
-        return ['error' => 'error'];
+        $query = 'insert into operador (nombre,contrasenia,rol,oficina_id,updated_at) values(?,?,?,?,?)';
+        $values = [$this->nombre, $this->passwordHash($this->contrasenia), $this->rol, $this->oficina_id, date('Y-m-d H:i:s')];
+        $id = Sqlite::execInsert($query, $values);
+        return $id !== 0 ? $this->find($id) : ['error' => 'Error'];
     }
 
     private function passwordHash(string $password): string

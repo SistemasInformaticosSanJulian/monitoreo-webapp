@@ -31,13 +31,13 @@ class MOficina
 
     public function find($value, string $column = 'id'): array
     {
-        $query = "select * from oficina where $column=? and soft_delete=0;";
+        $query = "select * from oficina where $column=?";
         return Sqlite::fetchOne($query, [$value]);
     }
 
     public function findAll(): array
     {
-        $query = "select * from oficina where soft_delete=0 order by nombre;";
+        $query = "select * from oficina order by nombre;";
         return Sqlite::fetchAll($query);
     }
 

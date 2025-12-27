@@ -6,7 +6,7 @@ namespace App\Views;
 
 class VOperador
 {
-    public function showForm(array $operadores, array $oficinas, array $operador = []): void
+    public function showForm(array $oficinas, array $operadores, array $operador = []): void
     {
         $title = 'Gestión de Operadores';
         $content = '../templates/operador/formulario.html';

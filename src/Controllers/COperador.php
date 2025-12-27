@@ -26,7 +26,7 @@ class COperador
         $operador = $this->model->find($id);
         $operadores = $this->model->findAll();
         $oficinas = $this->modelOficina->findAll();
-        $this->view->showForm($operadores, $oficinas, $operador);
+        $this->view->showForm($oficinas, $operadores, $operador);
     }
 
     public function store(array $request): void
