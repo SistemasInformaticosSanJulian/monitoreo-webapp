@@ -28,6 +28,7 @@ class CSession
 
     public function setData(array $data): void
     {
+        $_SESSION['rol'] = '';
         foreach ($data as $key => $value) {
             $_SESSION[$key] = $value;
         }

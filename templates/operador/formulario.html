@@ -1,0 +1,73 @@
+<div class="page-header">
+  <h1>Gestión de Operadores</h1>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <form action="/operador" method="post">
+      <input type="hidden" name="id" value="<?= $operador['id'] ?? 0 ?>">
+
+      <div class="row">
+        <div class="col-sm-4">
+          <label for="username" class="control-label">Nombre de Usuario</label>
+          <input type="text" name="username" id="username" required value="<?= $operador['nombre'] ?? '' ?>"
+            class="form-control">
+        </div>
+        <div class="col-sm-4">
+          <label for="password" class="control-label">Contraseña
+            <?= isset($operador['id']) ? '(Vacío para no cambiar)' : '' ?>
+          </label>
+          <input type="password" name="password" id="password" <?=isset($operador['id']) ? '' : 'required' ?>
+          class="form-control">
+        </div>
+        <div class="col-sm-4">
+          <label for="oficina_id" class="control-label">Oficina</label>
+          <select name="oficina_id" id="oficina_id" class="form-control" required>
+            <option value="">Seleccione una oficina</option>
+            <?php foreach($oficinas as $off): ?>
+            <option value="<?= $off['id'] ?>" <?=(isset($operador['oficina_id']) && $operador['oficina_id']==$off['id'])
+              ? 'selected' : '' ?>>
+              <?= $off['nombre'] ?>
+            </option>
+            <?php endforeach; ?>
+          </select>
+        </div>
+      </div>
+
+      <div style="margin-top: 16px; margin-bottom: 16px;">
+        <a href="/operador" class="btn btn-sm btn-success">Nuevo</a>
+        <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<div class="row mt-5">
+  <div class="col-sm-12">
+    <table id="simple-table" class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>Nombre de Usuario</th>
+          <th>Oficina</th>
+          <th width="50"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach($operadores as $item): ?>
+        <tr>
+          <td>
+            <?= $item['nombre'] ?>
+          </td>
+          <td>
+            <?= $item['oficina_nombre'] ?? 'Sin oficina' ?>
+          </td>
+          <td>
+            <a href="/operador/<?= $item['id'] ?>" class="btn btn-xs btn-success">Ver</a>
+          </td>
+        </tr>
+        <?php endforeach; ?>
+      </tbody>
+    </table>
+  </div>
+</div>

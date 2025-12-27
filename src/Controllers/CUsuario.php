@@ -43,7 +43,6 @@ class CUsuario
         CSession::getInstance()->setData([
             'id' => $model['id'],
             'usuario' => $model['nombre'],
-            'rol' => $model['rol'],
         ]);
 
         header('Location: /');
@@ -60,8 +59,7 @@ class CUsuario
         if ($user && $this->model->passwordVerify($inputPassword, $user['contrasenia'])) {
             CSession::getInstance()->setData([
                 'id' => $user['id'],
-                'usuario' => $user['nombre'],
-                'rol' => $user['rol']
+                'usuario' => $user['nombre']
             ]);
 
             $redirectUrl = '/';

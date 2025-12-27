@@ -1,6 +1,6 @@
 {
     "name": "juanvladimir13/monitoreo-webapp",
-    "description": "PHP project skeleton",
+    "description": "Monitoreo de trufi",
     "type": "project",
     "version": "0.1.3",
     "license": "MIT",
@@ -15,7 +15,7 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": "^8.3 || ^7.4",
+        "php": "^7.4 || ^8.3",
         "ext-sqlite3": "*",
         "ext-json": "*",
         "ext-mbstring": "*",

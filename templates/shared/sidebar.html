@@ -62,7 +62,7 @@
           </a>
           <b class="arrow"></b>
         </li>
-        <?php if ($_SESSION['rol'] !== 'admin'): ?>
+
         <li class="">
           <a href="/cliente/encomienda">
             <i class="menu-icon fa fa-caret-right"></i>
@@ -77,11 +77,11 @@
           </a>
           <b class="arrow"></b>
         </li>
-        <?php endif; ?>
+
       </ul>
     </li>
 
-    <?php if ($_SESSION['rol'] == 'admin'): ?>
+
     <li class="">
       <a href="#" class="dropdown-toggle">
         <i class="menu-icon fa fa-desktop"></i>
@@ -122,7 +122,7 @@
         </li>
       </ul>
     </li>
-    <?php endif; ?>
+
   </ul><!-- /.nav-list -->
 
   <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">

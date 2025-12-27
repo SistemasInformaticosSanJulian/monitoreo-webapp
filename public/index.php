@@ -2,7 +2,7 @@
 require '../vendor/autoload.php';
 
 use Bramus\Router\Router;
-use App\Controllers\{CUsuario, CSession, CCliente, CConductor, CMovil, CMonitoreo, CViaje};
+use App\Controllers\{CUsuario, CSession, CCliente, CConductor, CMovil, CMonitoreo, CViaje, COficina, COperador};
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
@@ -69,6 +69,34 @@ if (array_key_exists('usuario', $_SESSION)) {
             $controller->store($_POST);
         });
     });
+    $router->mount('/oficina', function () use ($router) {
+        $router->get('/', function () {
+            $controller = new COficina();
+            $controller->showForm();
+        });
+
+        $router->get('/(\d+)', '\App\Controllers\COficina@showForm');
+
+        $router->post('/', function () {
+            $controller = new COficina();
+            $controller->store($_POST);
+        });
+    });
+
+    $router->mount('/operador', function () use ($router) {
+        $router->get('/', function () {
+            $controller = new COperador();
+            $controller->showForm();
+        });
+
+        $router->get('/(\d+)', '\App\Controllers\COperador@showForm');
+
+        $router->post('/', function () {
+            $controller = new COperador();
+            $controller->store($_POST);
+        });
+    });
+
     $router->mount('/monitoreo', function () use ($router) {
         $router->get('/busqueda', function () {
             $controller = new CMonitoreo();

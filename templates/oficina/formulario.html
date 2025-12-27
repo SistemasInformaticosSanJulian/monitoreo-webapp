@@ -1,0 +1,65 @@
+<div class="page-header">
+  <h1>Registrar Oficina</h1>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <form action="/oficina" method="post">
+      <input type="hidden" name="id" value="<?= $oficina['id'] ?? 0 ?>">
+      
+      <div class="row">
+        <div class="col-sm-6">
+          <label for="nombre" class="control-label">Nombre de Oficina</label>
+          <input type="text" name="nombre" id="nombre" required
+                 value="<?= $oficina['nombre'] ?? '' ?>" class="form-control">
+        </div>
+        <div class="col-sm-6">
+          <label for="celular" class="control-label">Celular</label>
+          <input type="tel" name="celular" id="celular" required
+                 value="<?= $oficina['celular'] ?? '' ?>" class="form-control">
+        </div>
+      </div>
+
+      <div class="row" style="margin-top: 8px;">
+        <div class="col-sm-12">
+          <label for="direccion" class="control-label">Dirección</label>
+          <input type="text" name="direccion" id="direccion" required
+                 value="<?= $oficina['direccion'] ?? '' ?>" class="form-control">
+        </div>
+      </div>
+
+      <div style="margin-top: 16px; margin-bottom: 16px;">
+        <a href="/oficina" class="btn btn-sm btn-success">Nuevo</a>
+        <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<div class="row mt-5">
+  <div class="col-sm-12">
+    <table id="simple-table" class="table table-bordered table-hover">
+      <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Dirección</th>
+        <th>Celular</th>
+        <th width="50"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <?php foreach($oficinas as $item): ?>
+      <tr>
+        <td><?= $item['nombre'] ?></td>
+        <td><?= $item['direccion'] ?></td>
+        <td><?= $item['celular'] ?></td>
+        <td>
+          <a href="/oficina/<?= $item['id'] ?>" class="btn btn-xs btn-success">Ver</a>
+        </td>
+      </tr>
+      <?php endforeach; ?>
+      </tbody>
+    </table>
+  </div>
+</div>
