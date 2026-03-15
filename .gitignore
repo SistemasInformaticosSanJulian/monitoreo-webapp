@@ -1,6 +1,3 @@
-# Docs
-/docs
-
 # Vendor
 /vendor
 
@@ -24,5 +21,3 @@ composer.lock
 .php-cs-fixer.cache
 psalm.xml
 phpstan.neon
-
-/storage/database.sqlite
